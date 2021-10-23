@@ -32,14 +32,15 @@ public class Connect
 		catch(SQLException e)
 		{
 			JOptionPane.showMessageDialog(null, "Failed to connect to database", "ERROR", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
 			System.exit(1);
 		}
 	}
 	
 	
-	public synchronized Connect getConnection()
+	public static synchronized Connect getConnection()
 	{
-		return (connect == null) ? new Connect() : connect;
+		return (connect == null) ? connect = new Connect() : connect;
 	}
 	
 	public ResultSet executeQuery(String table)
@@ -50,6 +51,7 @@ public class Connect
 		}catch(SQLException e)
 		{
 			JOptionPane.showMessageDialog(null, "Failed to execute SELECT query", "Query failed", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
 			return null;
 		}
 		
@@ -64,6 +66,7 @@ public class Connect
 		}catch(SQLException e)
 		{
 			JOptionPane.showMessageDialog(null, "Failed to execute UPDATE query", "Query failed", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
 		}
 	}
 	
@@ -76,6 +79,7 @@ public class Connect
 		}catch(SQLException e)
 		{
 			JOptionPane.showMessageDialog(null, "Failed to execute SELECT query", "Query failed", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
 		}
 		
 		return preparedStatement; 
