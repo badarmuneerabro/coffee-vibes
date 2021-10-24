@@ -1,18 +1,18 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 
+import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 public class LoginInternalFrame extends JInternalFrame {
+	
 	private JTextField userNameTextField;
 	private JPasswordField passwordTextField;
-
 	/**
 	 * Launch the application.
 	 */
@@ -33,7 +33,6 @@ public class LoginInternalFrame extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public LoginInternalFrame() {
-		setTitle("Login");
 		setBounds(100, 100, 448, 299);
 		getContentPane().setLayout(null);
 		
@@ -68,4 +67,5 @@ public class LoginInternalFrame extends JInternalFrame {
 		getContentPane().add(passwordTextField);
 
 	}
+
 }
