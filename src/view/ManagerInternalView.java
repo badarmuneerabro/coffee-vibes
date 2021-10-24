@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JTabbedPane;
-import java.awt.BorderLayout;
+
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -14,6 +14,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+import javax.swing.DefaultComboBoxModel;
 
 public class ManagerInternalView extends JInternalFrame {
 	private JTable table;
@@ -104,7 +105,7 @@ public class ManagerInternalView extends JInternalFrame {
 		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_1.setBounds(10, 183, 718, 348);
 		panel_1.add(tabbedPane_1);
-		String[] comboBoxItems = {"Human Resource","Manager","Storage Management","Promo Management","Cashier"};
+		 
 		
 		JPanel updatePanel = new JPanel();
 		tabbedPane_1.addTab("Update Employee", null, updatePanel, null);
@@ -132,9 +133,10 @@ public class ManagerInternalView extends JInternalFrame {
 		positionLabel1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		positionLabel1.setBounds(82, 140, 115, 20);
 		updatePanel.add(positionLabel1);
-		JComboBox positionComboBox1 = new JComboBox(comboBoxItems);
+		JComboBox<String> positionComboBox1 = new JComboBox<String>();
+		positionComboBox1.setModel(new DefaultComboBoxModel<String>(new String[] {"Human Resource", "Manager", "Storage Management", "Promo Management", "Cashier"}));
 		positionComboBox1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		positionComboBox1.setBounds(207, 140, 124, 22);
+		positionComboBox1.setBounds(207, 140, 170, 22);
 		updatePanel.add(positionComboBox1);
 		
 		JLabel idLabel1 = new JLabel("Employee ID");
@@ -142,8 +144,8 @@ public class ManagerInternalView extends JInternalFrame {
 		idLabel1.setBounds(119, 47, 78, 20);
 		updatePanel.add(idLabel1);
 		
-		JComboBox idComboBox1 = new JComboBox();
-		idComboBox1.setBounds(207, 45, 124, 22);
+		JComboBox<String> idComboBox1 = new JComboBox<String>();
+		idComboBox1.setBounds(207, 45, 170, 22);
 		updatePanel.add(idComboBox1);
 		
 		JLabel userNameLabel1 = new JLabel("Employee UserName");
@@ -186,9 +188,10 @@ public class ManagerInternalView extends JInternalFrame {
 		positionLabel2.setBounds(82, 140, 115, 20);
 		firePanel.add(positionLabel2);
 		
-		JComboBox positionComboBox2 = new JComboBox(new Object[]{});
+		JComboBox<String> positionComboBox2 = new JComboBox<String>();
+		positionComboBox2.setModel(new DefaultComboBoxModel<String>(new String[] {"Human Resource", "Manager", "Storage Management", "Promo Management", "Cashier"}));
 		positionComboBox2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		positionComboBox2.setBounds(207, 140, 124, 22);
+		positionComboBox2.setBounds(207, 140, 170, 22);
 		firePanel.add(positionComboBox2);
 		
 		JLabel idLabel2 = new JLabel("Employee ID");
@@ -196,8 +199,8 @@ public class ManagerInternalView extends JInternalFrame {
 		idLabel2.setBounds(119, 47, 78, 20);
 		firePanel.add(idLabel2);
 		
-		JComboBox idCmboBox2 = new JComboBox();
-		idCmboBox2.setBounds(207, 45, 124, 22);
+		JComboBox<String> idCmboBox2 = new JComboBox<String>();
+		idCmboBox2.setBounds(207, 45, 170, 22);
 		firePanel.add(idCmboBox2);
 		
 		JLabel userNameLabel2 = new JLabel("Employee UserName");
@@ -212,6 +215,9 @@ public class ManagerInternalView extends JInternalFrame {
 		JButton fireEmployeeButton = new JButton("Fire Employee");
 		fireEmployeeButton.setBounds(207, 215, 143, 23);
 		firePanel.add(fireEmployeeButton);
+		
+		
+		
 
 	}
 }
