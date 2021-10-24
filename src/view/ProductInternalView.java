@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.border.TitledBorder;
 
 public class ProductInternalView extends JInternalFrame {
 	private JTable productTable;
@@ -28,6 +29,9 @@ public class ProductInternalView extends JInternalFrame {
 	private JTextField priceTextField3;
 	private JTextField stockTextField3;
 	private JTable table;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
 
 	/**
 	 * Launch the application.
@@ -292,15 +296,67 @@ public class ProductInternalView extends JInternalFrame {
 		));
 		scrollPane_2.setViewportView(table);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 246, 729, 313);
-		voucherPanel.add(tabbedPane);
-		
-		JPanel generateVoucherTab = new JPanel();
-		tabbedPane.addTab("Generate Voucher", null, generateVoucherTab, null);
+		JPanel panel = new JPanel();
+		panel.setBounds(10, 248, 729, 311);
+		voucherPanel.add(panel);
+		panel.setLayout(null);
 		
 		JPanel panel_1 = new JPanel();
-		tabbedPane.addTab("New tab", null, panel_1, null);
+		panel_1.setBorder(new TitledBorder(null, "Generate Voucher", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBounds(10, 11, 277, 289);
+		panel.add(panel_1);
+		panel_1.setLayout(null);
+		
+		JLabel voucherLabel = new JLabel("Voucher Discount: ");
+		voucherLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		voucherLabel.setBounds(10, 27, 125, 26);
+		panel_1.add(voucherLabel);
+		
+		textField = new JTextField();
+		textField.setBounds(145, 29, 98, 26);
+		panel_1.add(textField);
+		textField.setColumns(10);
+		
+		JButton generateButton = new JButton("Generate");
+		generateButton.setBounds(10, 79, 98, 32);
+		panel_1.add(generateButton);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBorder(new TitledBorder(null, "Delete Voucher", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_2.setBounds(357, 11, 351, 289);
+		panel.add(panel_2);
+		panel_2.setLayout(null);
+		
+		JLabel voucherId = new JLabel("Voucher ID: ");
+		voucherId.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		voucherId.setBounds(10, 31, 94, 31);
+		panel_2.add(voucherId);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(114, 30, 146, 36);
+		panel_2.add(comboBox);
+		
+		JLabel discountLabel = new JLabel("Discount:");
+		discountLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		discountLabel.setBounds(10, 89, 94, 31);
+		panel_2.add(discountLabel);
+		
+		textField_1 = new JTextField();
+		textField_1.setEditable(false);
+		textField_1.setBounds(114, 91, 86, 31);
+		panel_2.add(textField_1);
+		textField_1.setColumns(10);
+		
+		JLabel statusLabel = new JLabel("Status: ");
+		statusLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		statusLabel.setBounds(10, 155, 76, 31);
+		panel_2.add(statusLabel);
+		
+		textField_2 = new JTextField();
+		textField_2.setEditable(false);
+		textField_2.setBounds(114, 155, 86, 31);
+		panel_2.add(textField_2);
+		textField_2.setColumns(10);
 
 	}
 }
