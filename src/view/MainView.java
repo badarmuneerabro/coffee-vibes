@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 import javax.swing.JSeparator;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -13,9 +15,11 @@ import javax.swing.JMenuItem;
 
 public class MainView {
 	private static MainView mainView;
+	private static int count = 1;
 	private JFrame frmCoffeeVibes;
 	private LoginInternalFrame loginFrame;
 	private ProductInternalView productFrame;
+	private JMenuItem msgMenuItem;
 
 	/**
 	 * Launch the application.
@@ -52,7 +56,7 @@ public class MainView {
 	private void initialize() {
 		frmCoffeeVibes = new JFrame();
 		frmCoffeeVibes.setTitle("Coffee vibes");
-		frmCoffeeVibes.setBounds(100, 100, 708, 600);
+		frmCoffeeVibes.setBounds(100, 100, 850,795);
 		frmCoffeeVibes.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCoffeeVibes.getContentPane().setLayout(null);
 		frmCoffeeVibes.setLocationRelativeTo(null);
@@ -63,11 +67,13 @@ public class MainView {
 		JMenu acountItem = new JMenu("Acount");
 		menuBar.add(acountItem);
 		
-		JMenuItem msgMenuItem = new JMenuItem("No Log In");
+		msgMenuItem = new JMenuItem("No Log In");
 		acountItem.add(msgMenuItem);
-		loginFrame = new LoginInternalFrame();
 		productFrame = new ProductInternalView();
-		loginFrame.setLocation(111, 115);
+		productFrame.setLocation(10, 47);
+		loginFrame = new LoginInternalFrame();
+		loginFrame.setBounds(238, 168, 448, 299);
+		addFrames();
 		openLoginFrame();
 	}
 	
@@ -75,23 +81,40 @@ public class MainView {
 	{
 		loginFrame = new LoginInternalFrame();
 	}
+	public void addFrames()
+	{
+		this.frmCoffeeVibes.getContentPane().add(productFrame);
+		this.frmCoffeeVibes.getContentPane().add(loginFrame);
+	}
 	public static MainView getInstance()
 	{
-		System.out.println("Hello, this is getInstance().");
+		System.out.println("Step 2");
 		return (mainView == null) ? mainView = new MainView() : mainView;
 	}
 	public void openInternalFrame(JInternalFrame frame)
 	{
-		frmCoffeeVibes.add(frame);
+		System.out.println("Hello, this is openInternalFrame().");
+		Dimension jInternalFrameSize = frame.getSize();
+		int width = (900 - jInternalFrameSize.width) / 2;
+		int height = (785 - jInternalFrameSize.height) / 2;
 		frame.setVisible(true);
 	}
 	public void openLoginFrame()
 	{
+		System.out.println("Step 3");
 		openInternalFrame(loginFrame);
 	}
 	
+	public void setText(String text)
+	{
+		this.msgMenuItem.setText("Hello, " + text);
+	}
 	public void openProductInternalVeiw()
 	{
 		openInternalFrame(productFrame);
+	}
+	public void setVisible()
+	{
+		frmCoffeeVibes.setVisible(true);
 	}
 }

@@ -14,7 +14,7 @@ public class Connect
 {
 	private final String USERNAME = "root";
 	private final String PASSWORD = "";
-	private final String URL = "jdbc:mysql://localhost:3308//coffeevibes";
+	private final String URL = "jdbc:mysql://localhost:3308/coffeevibes";
 	
 	
 	private Connection connection;

@@ -80,7 +80,7 @@ public class LoginInternalFrame extends JInternalFrame {
 				}
 					
 				Connect db = Connect.getConnection();
-				PreparedStatement pStatement = db.getPrepareStatement("SELECT * FROM EMP WHERE USERNAME=? AND PASSWORD=? AND STATUS=\'EMPLOYED\'");
+				PreparedStatement pStatement = db.getPrepareStatement("SELECT * FROM EMP WHERE EMP_USERNAME=? AND EMP_PASSWORD=? AND EMP_STATUS=\'EMPLOYED\'");
 				try
 				{
 					pStatement.setString(1, userNameTextField.getText());
@@ -123,13 +123,14 @@ public class LoginInternalFrame extends JInternalFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		System.out.println("Position: " + position);
 		switch(position)
 		{
 		case 1:
-			MainView.getInstance().openProductInternalVeiw();
 			break;
 		case 2:
+			MainView.getInstance().openProductInternalVeiw();
+			MainView.getInstance().setText("Product admin");
 			break;
 		case 3:
 			break;
