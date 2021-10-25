@@ -2,6 +2,7 @@ package view;
 
 import java.awt.EventQueue;
 
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JInternalFrame;
 import javax.swing.JTabbedPane;
 
@@ -17,7 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.DefaultComboBoxModel;
 
 public class ManagerInternalView extends JInternalFrame {
-	private JTable table;
+	private JTable transactionDetailTable;
 	private JTable table_1;
 
 	/**
@@ -55,8 +56,8 @@ public class ManagerInternalView extends JInternalFrame {
 		scrollPane_1.setBounds(10, 11, 718, 520);
 		panel.add(scrollPane_1);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
+		transactionDetailTable = new JTable();
+		transactionDetailTable.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null},
 				{null, null, null, null, null},
@@ -73,8 +74,8 @@ public class ManagerInternalView extends JInternalFrame {
 				"New column", "New column", "New column", "New column", "New column"
 			}
 		));
-		table.getColumnModel().getColumn(0).setMinWidth(18);
-		scrollPane_1.setViewportView(table);
+		transactionDetailTable.getColumnModel().getColumn(0).setMinWidth(18);
+		scrollPane_1.setViewportView(transactionDetailTable);
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Employee Management", null, panel_1, null);
@@ -215,9 +216,12 @@ public class ManagerInternalView extends JInternalFrame {
 		JButton fireEmployeeButton = new JButton("Fire Employee");
 		fireEmployeeButton.setBounds(207, 215, 143, 23);
 		firePanel.add(fireEmployeeButton);
-		
-		
-		
-
 	}
+	
+
+	void fillTransactionDetailTabel() {
+		DefaultTableModel tableModel = new DefalultTabelModel();
+		
+	}
+	
 }

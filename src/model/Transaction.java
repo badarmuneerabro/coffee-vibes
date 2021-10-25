@@ -12,6 +12,25 @@ public class Transaction {
 	private int totalPrice;
 	private List<TransactionItem> listTransactionItem;
 	
+	
+	
+	public Transaction() {
+		super();
+	}
+
+
+	public Transaction(int transactionID, Date purchaseDate, int voucherID, int employeeID, int totalPrice,
+			List<TransactionItem> listTransactionItem) {
+		super();
+		this.transactionID = transactionID;
+		this.purchaseDate = purchaseDate;
+		this.voucherID = voucherID;
+		this.employeeID = employeeID;
+		this.totalPrice = totalPrice;
+		this.listTransactionItem = listTransactionItem;
+	}
+
+	
 	public int getTransactionID() 
 	{
 		return transactionID;
