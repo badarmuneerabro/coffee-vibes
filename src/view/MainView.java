@@ -3,6 +3,8 @@ package view;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+
 import java.awt.BorderLayout;
 import javax.swing.JSeparator;
 import javax.swing.JMenuBar;
@@ -13,6 +15,7 @@ public class MainView {
 	private static MainView mainView;
 	private JFrame frmCoffeeVibes;
 	private LoginInternalFrame loginFrame;
+	private ProductInternalView productFrame;
 
 	/**
 	 * Launch the application.
@@ -53,8 +56,17 @@ public class MainView {
 		frmCoffeeVibes.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCoffeeVibes.getContentPane().setLayout(null);
 		frmCoffeeVibes.setLocationRelativeTo(null);
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 101, 22);
+		frmCoffeeVibes.getContentPane().add(menuBar);
 		
+		JMenu acountItem = new JMenu("Acount");
+		menuBar.add(acountItem);
+		
+		JMenuItem msgMenuItem = new JMenuItem("No Log In");
+		acountItem.add(msgMenuItem);
 		loginFrame = new LoginInternalFrame();
+		productFrame = new ProductInternalView();
 		loginFrame.setLocation(111, 115);
 		openLoginFrame();
 	}
@@ -68,20 +80,18 @@ public class MainView {
 		System.out.println("Hello, this is getInstance().");
 		return (mainView == null) ? mainView = new MainView() : mainView;
 	}
-	
+	public void openInternalFrame(JInternalFrame frame)
+	{
+		frmCoffeeVibes.add(frame);
+		frame.setVisible(true);
+	}
 	public void openLoginFrame()
 	{
-		frmCoffeeVibes.getContentPane().add(loginFrame);
-		
-		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 51, 22);
-		frmCoffeeVibes.getContentPane().add(menuBar);
-		
-		JMenu acountItem = new JMenu("Acount");
-		menuBar.add(acountItem);
-		
-		JMenuItem msgMenuItem = new JMenuItem("No Log In");
-		acountItem.add(msgMenuItem);
-		loginFrame.setVisible(true);
+		openInternalFrame(loginFrame);
+	}
+	
+	public void openProductInternalVeiw()
+	{
+		openInternalFrame(productFrame);
 	}
 }

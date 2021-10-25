@@ -6,8 +6,17 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import model.Connect;
+
+import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.awt.event.ActionEvent;
 
 public class LoginInternalFrame extends JInternalFrame {
 	
@@ -58,6 +67,41 @@ public class LoginInternalFrame extends JInternalFrame {
 		getContentPane().add(passwordLabel);
 		
 		JButton loginButton = new JButton("Login");
+		loginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				String userName =userNameTextField.getText();
+				String password = new String(passwordTextField.getPassword());
+				
+				if(userName.trim().isEmpty() || password.trim().isEmpty())
+				{
+					JOptionPane.showMessageDialog(null, "Username or password can not be empty", "Login Failed", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+					
+				Connect db = Connect.getConnection();
+				PreparedStatement pStatement = db.getPrepareStatement("SELECT * FROM EMP WHERE USERNAME=? AND PASSWORD=? AND STATUS=\'EMPLOYED\'");
+				try
+				{
+					pStatement.setString(1, userNameTextField.getText());
+					pStatement.setString(2, new String(passwordTextField.getPassword()));
+					ResultSet rs = pStatement.executeQuery();
+					
+					
+					if(rs.next())
+					{
+						LoginInternalFrame.this.dispose();
+						openFrame(rs);
+					}
+					else
+						JOptionPane.showMessageDialog(null, "Incorrect Username or password", "Login Faild", JOptionPane.ERROR_MESSAGE);
+					
+				}catch(SQLException ex)
+				{
+					System.out.println("ERROR " + ex);
+				}
+			}
+		});
 		loginButton.setBounds(105, 209, 106, 30);
 		getContentPane().add(loginButton);
 		
@@ -66,6 +110,32 @@ public class LoginInternalFrame extends JInternalFrame {
 		passwordTextField.setBounds(138, 146, 149, 24);
 		getContentPane().add(passwordTextField);
 
+	}
+	
+	public void openFrame(ResultSet rs)
+	{
+		int position = 0;
+		try 
+		{
+			position = rs.getInt("EMP_POS_ID");
+		} catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		switch(position)
+		{
+		case 1:
+			MainView.getInstance().openProductInternalVeiw();
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		}
 	}
 
 }
