@@ -1,5 +1,7 @@
 package model;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 public class Product 
@@ -52,6 +54,19 @@ public class Product
 	
 	public Product insertNewProdut()
 	{
+		Connect connect = Connect.getConnection();
+		PreparedStatement preparedStatement = connect.getPrepareStatement("INSERT INTO PRODUCT(PROD_NAME, PROD_DESC, PROD_PRICE, PROD_STOCK) VALUES(?,?, ?, ?)");
+		try {
+			preparedStatement.setString(1, this.getName());
+			preparedStatement.setString(2,  this.getDescription());
+			preparedStatement.setInt(3, this.getPrice());
+			preparedStatement.setInt(4, this.getStock());
+			return this;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 	
