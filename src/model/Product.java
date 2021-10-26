@@ -1,8 +1,11 @@
 package model;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 public class Product 
 {
@@ -61,9 +64,11 @@ public class Product
 			preparedStatement.setString(2,  this.getDescription());
 			preparedStatement.setInt(3, this.getPrice());
 			preparedStatement.setInt(4, this.getStock());
+			preparedStatement.executeQuery();
 			return this;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "Error occured while inserting data.", "ERROR", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 		
@@ -77,16 +82,60 @@ public class Product
 	
 	public Product getProduct(int productID)
 	{
+		Connect connect = Connect.getConnection();
+		PreparedStatement preparedStatement = connect.getPrepareStatement("SELECT * FROM PRODUCT WHERE PROD_ID=?");
+		try {
+			preparedStatement.setInt(1, productID);
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			if(rs.next())
+			{
+				Product p = new Product();
+				p.setProductID(rs.getInt("PROD_ID"));
+				p.setName(rs.getString("PROD_NAME"));
+				p.setDescription(rs.getString("PROD_DESC"));
+				p.setPrice(rs.getInt("PROD_PRICE"));
+				p.setStock(rs.getInt("PROD_STOCK"));
+				return p;
+			}
+			JOptionPane.showMessageDialog(null, "No Product found", "WARNING", JOptionPane.WARNING_MESSAGE);
+			return null;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
 	public Product updateProduct() 
 	{
+		Connect connect = Connect.getConnection();
+		PreparedStatement preparedStatement = connect.getPrepareStatement("UPDATE PROD SET PRD_NAME=?, PROD_DESC=?, PROD_PRICE=? PROD_STOCK=?");
+		try {
+			preparedStatement.setString(1, getName());
+			preparedStatement.setString(2, getDescription());
+			preparedStatement.setInt(3,  getPrice());
+			preparedStatement.setInt(4,  getStock());
+			preparedStatement.execute();
+			return this;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
 	public boolean deleteProduct() 
 	{
+		Connect connect = Connect.getConnection();
+		PreparedStatement preparedStatement = connect.getPrepareStatement("DELETE FROM PROD WHERE PROD_ID=?");
+		try {
+			preparedStatement.setInt(1, getProductID());
+			return preparedStatement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 	}
 }
