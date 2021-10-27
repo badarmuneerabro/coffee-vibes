@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import controller.ProductHandler;
 import model.Product;
 
 import javax.swing.JLabel;
@@ -135,19 +136,37 @@ public class ProductInternalView extends JInternalFrame {
 		insertPanel.add(stockTextField);
 		stockTextField.setColumns(10);
 		
-		JButton insertButton = new JButton("Insert");
-		insertButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		insertButton.setBounds(612, 240, 102, 30);
-		insertPanel.add(insertButton);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(153, 67, 200, 72);
 		insertPanel.add(scrollPane);
 		
+		
 		JTextArea descriptionTextArea = new JTextArea();
 		scrollPane.setViewportView(descriptionTextArea);
 		descriptionTextArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
 		descriptionTextArea.setLineWrap(true);
+		
+		JButton insertButton = new JButton("Insert");
+		insertButton.addActionListener(new ActionListener() {
+			
+			//inserting new product in the database.
+			public void actionPerformed(ActionEvent e) 
+			{
+				ProductHandler handler = ProductHandler.getInstance();
+				Product p = handler.insertProdcut(nameTextField.getText().trim(), descriptionTextArea.getText(), Integer.parseInt(priceTextField.getText()), Integer.parseInt(stockTextField.getText()));
+				if(p == null)
+				{
+					JOptionPane.showMessageDialog(null,  "Inserting faild, please insert data correctly.", "ERROR", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				JOptionPane.showMessageDialog(null,  "Inserted Successfully...", "Confirmation", JOptionPane.INFORMATION_MESSAGE);	
+			}
+		});
+		insertButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		insertButton.setBounds(612, 240, 102, 30);
+		insertPanel.add(insertButton);
 		
 
 		JPanel updatePanel = new JPanel();
@@ -200,10 +219,6 @@ public class ProductInternalView extends JInternalFrame {
 		updatePanel.add(stockTextField2);
 		stockTextField2.setColumns(10);
 		
-		JButton updateButton = new JButton("Update");
-		updateButton.setBounds(615, 239, 99, 31);
-		updatePanel.add(updateButton);
-		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(157, 99, 233, 72);
 		updatePanel.add(scrollPane_1);
@@ -211,6 +226,34 @@ public class ProductInternalView extends JInternalFrame {
 		JTextArea descriptionTextArea2 = new JTextArea();
 		scrollPane_1.setViewportView(descriptionTextArea2);
 		descriptionTextArea2.setFont(new Font("Monospaced", Font.PLAIN, 14));
+		
+		JButton updateButton = new JButton("Update");
+		updateButton.addActionListener(new ActionListener() {
+			
+			//updating product.
+			public void actionPerformed(ActionEvent e) {
+				
+				ProductHandler handler = ProductHandler.getInstance();
+				int productID = (Integer) idComboBox.getSelectedItem();
+				String name = nameTextField2.getText();
+				String description = descriptionTextArea2.getText();
+				int price = Integer.parseInt(priceTextField2.getText());
+				int stock = Integer.parseInt(stockTextField2.getText());
+				
+				Product p = handler.updateProduct(productID, name, description, price, stock);
+				if(p == null)
+				{
+					JOptionPane.showMessageDialog(null, "Update failed, insert data correctly", "ERROR", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Updated Successfully...", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
+		updateButton.setBounds(615, 239, 99, 31);
+		updatePanel.add(updateButton);
 		
 		JPanel deletePanel = new JPanel();
 		innerTabbedPane.addTab("Delete", null, deletePanel, null);
@@ -278,9 +321,9 @@ public class ProductInternalView extends JInternalFrame {
 				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure, you want to delete?", "Confirm", JOptionPane.YES_NO_OPTION);
 				if(confirm == 1)
 					return;
-				int productID = 
-				Product p = new Product();
-				p.setProductID();
+				Integer productID = (Integer)idComboBox2.getSelectedItem();
+				ProductHandler p = ProductHandler.getInstance();
+				p.deleteProduct(productID);
 			}
 		});
 		deleteButton.setBounds(615, 239, 99, 31);

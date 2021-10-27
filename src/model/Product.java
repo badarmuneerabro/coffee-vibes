@@ -115,12 +115,13 @@ public class Product
 	public Product updateProduct() 
 	{
 		Connect connect = Connect.getConnection();
-		PreparedStatement preparedStatement = connect.getPrepareStatement("UPDATE PROD SET PRD_NAME=?, PROD_DESC=?, PROD_PRICE=? PROD_STOCK=?");
+		PreparedStatement preparedStatement = connect.getPrepareStatement("UPDATE PROD SET PRD_NAME=?, PROD_DESC=?, PROD_PRICE=? PROD_STOCK=? ");
 		try {
 			preparedStatement.setString(1, getName());
 			preparedStatement.setString(2, getDescription());
 			preparedStatement.setInt(3,  getPrice());
 			preparedStatement.setInt(4,  getStock());
+			preparedStatement.setInt(5,  getProductID());
 			preparedStatement.execute();
 			return this;
 		} catch (SQLException e) {
