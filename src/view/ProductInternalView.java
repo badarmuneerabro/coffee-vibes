@@ -7,6 +7,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import model.Product;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -274,7 +277,10 @@ public class ProductInternalView extends JInternalFrame {
 			{
 				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure, you want to delete?", "Confirm", JOptionPane.YES_NO_OPTION);
 				if(confirm == 1)
-					System.out.println("OK");
+					return;
+				int productID = 
+				Product p = new Product();
+				p.setProductID();
 			}
 		});
 		deleteButton.setBounds(615, 239, 99, 31);
