@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
@@ -16,6 +18,8 @@ import javax.swing.JButton;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ProductInternalView extends JInternalFrame {
 	private JTable productTable;
@@ -265,6 +269,14 @@ public class ProductInternalView extends JInternalFrame {
 		deletePanel.add(stockTextField3);
 		
 		JButton deleteButton = new JButton("Delete");
+		deleteButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure, you want to delete?", "Confirm", JOptionPane.YES_NO_OPTION);
+				if(confirm == 1)
+					System.out.println("OK");
+			}
+		});
 		deleteButton.setBounds(615, 239, 99, 31);
 		deletePanel.add(deleteButton);
 		
