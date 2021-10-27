@@ -133,6 +133,8 @@ public class LoginInternalFrame extends JInternalFrame {
 			MainView.getInstance().setText("Product admin");
 			break;
 		case 3:
+			MainView.getInstance().openManagerInternalView();
+			MainView.getInstance().setText("Manager");
 			break;
 		case 4:
 			break;

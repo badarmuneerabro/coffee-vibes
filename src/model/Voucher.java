@@ -1,10 +1,18 @@
 package model;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class Voucher 
 {
 	private int voucherID;
 	private int discount;
 	private String status;
+	
+	public Voucher()
+	{
+		
+	}
 	
 	public int getVoucherID() 
 	{
@@ -31,5 +39,19 @@ public class Voucher
 		this.status = status;
 	}
 	
-	
+	public Voucher generateVoucher()
+	{
+		Connect connect = Connect.getConnection();
+		PreparedStatement preparedStatement = connect.getPrepareStatement("INSERT INTO VOUCHER(VOUCHER_STATUS, VOUCHER_DISC) VALUES(?, ?)");
+		try {
+			preparedStatement.setString(1, getStatus());
+			preparedStatement.setInt(2, getDiscount());
+			preparedStatement.executeQuery();
+			return this;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

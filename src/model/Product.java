@@ -14,6 +14,11 @@ public class Product
 	private String description;
 	private int price;
 	private int stock;
+	
+	public Product()
+	{
+		
+	}
 	public int getProductID() 
 	{
 		return productID;

@@ -218,10 +218,4 @@ public class ManagerInternalView extends JInternalFrame {
 		firePanel.add(fireEmployeeButton);
 	}
 	
-
-	void fillTransactionDetailTabel() {
-		DefaultTableModel tableModel = new DefalultTabelModel();
-		
-	}
-	
 }

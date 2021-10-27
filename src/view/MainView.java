@@ -19,6 +19,7 @@ public class MainView {
 	private JFrame frmCoffeeVibes;
 	private LoginInternalFrame loginFrame;
 	private ProductInternalView productFrame;
+	private ManagerInternalView managerFrame;
 	private JMenuItem msgMenuItem;
 
 	/**
@@ -73,6 +74,9 @@ public class MainView {
 		productFrame.setLocation(10, 47);
 		loginFrame = new LoginInternalFrame();
 		loginFrame.setBounds(238, 168, 448, 299);
+		managerFrame = new ManagerInternalView();
+		managerFrame.setSize(746, 589);
+		managerFrame.setLocation(23, 58);
 		addFrames();
 		openLoginFrame();
 	}
@@ -85,10 +89,10 @@ public class MainView {
 	{
 		this.frmCoffeeVibes.getContentPane().add(productFrame);
 		this.frmCoffeeVibes.getContentPane().add(loginFrame);
+		this.frmCoffeeVibes.getContentPane().add(managerFrame);
 	}
 	public static MainView getInstance()
 	{
-		System.out.println("Step 2");
 		return (mainView == null) ? mainView = new MainView() : mainView;
 	}
 	public void openInternalFrame(JInternalFrame frame)
@@ -101,8 +105,11 @@ public class MainView {
 	}
 	public void openLoginFrame()
 	{
-		System.out.println("Step 3");
 		openInternalFrame(loginFrame);
+	}
+	public void openManagerInternalView()
+	{
+		openInternalFrame(managerFrame);
 	}
 	
 	public void setText(String text)
