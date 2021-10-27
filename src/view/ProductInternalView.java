@@ -18,11 +18,13 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 public class ProductInternalView extends JInternalFrame {
@@ -161,7 +163,11 @@ public class ProductInternalView extends JInternalFrame {
 					return;
 				}
 				
-				JOptionPane.showMessageDialog(null,  "Inserted Successfully...", "Confirmation", JOptionPane.INFORMATION_MESSAGE);	
+				JOptionPane.showMessageDialog(null,  "Inserted Successfully...", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+				nameTextField.setText("");
+				descriptionTextArea.setText("");
+				priceTextField.setText("");
+				stockTextField.setText("");
 			}
 		});
 		insertButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -249,6 +255,10 @@ public class ProductInternalView extends JInternalFrame {
 				else
 				{
 					JOptionPane.showMessageDialog(null, "Updated Successfully...", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+					nameTextField2.setText("");
+					descriptionTextArea2.setText("");
+					priceTextField2.setText("");
+					stockTextField2.setText("");
 				}
 			}
 		});
@@ -322,8 +332,19 @@ public class ProductInternalView extends JInternalFrame {
 				if(confirm == 1)
 					return;
 				Integer productID = (Integer)idComboBox2.getSelectedItem();
-				ProductHandler p = ProductHandler.getInstance();
-				p.deleteProduct(productID);
+				ProductHandler handler = ProductHandler.getInstance();
+				Product p = handler.deleteProduct(productID);
+				if(p==null)
+					{
+					JOptionPane.showMessageDialog(null, "Delete Failed.", "ERROR", JOptionPane.ERROR_MESSAGE);
+					return;
+					}
+				else
+					JOptionPane.showMessageDialog(null, "Employee Deleted Successfully...", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+				nameTextField3.setText("");
+				descriptionTextArea3.setText("");
+				priceTextField3.setText("");
+				stockTextField3.setText("");
 			}
 		});
 		deleteButton.setBounds(615, 239, 99, 31);
@@ -418,6 +439,19 @@ public class ProductInternalView extends JInternalFrame {
 		textField_2.setBounds(114, 155, 86, 31);
 		panel_2.add(textField_2);
 		textField_2.setColumns(10);
+		
+		fillComboBox(idComboBox);
+		fillComboBox(idComboBox2);
 
+	}
+	
+	public void fillComboBox(JComboBox cb)
+	{
+		List<Product> items = ProductHandler.getInstance().getAllProducts();
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+		
+		for(Product p: items)
+			model.addElement(Integer.toString(p.getProductID()));
+		cb.setModel(model);
 	}
 }

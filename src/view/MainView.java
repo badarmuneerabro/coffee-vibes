@@ -70,6 +70,9 @@ public class MainView {
 		
 		msgMenuItem = new JMenuItem("No Log In");
 		acountItem.add(msgMenuItem);
+		
+		JMenuItem logOutMenuItem = new JMenuItem("Log Out");
+		acountItem.add(logOutMenuItem);
 		productFrame = new ProductInternalView();
 		productFrame.setLocation(10, 47);
 		loginFrame = new LoginInternalFrame();
