@@ -6,6 +6,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ProductHandler;
@@ -24,8 +25,12 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class ProductInternalView extends JInternalFrame {
 	private JTable productTable;
@@ -149,6 +154,24 @@ public class ProductInternalView extends JInternalFrame {
 		descriptionTextArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
 		descriptionTextArea.setLineWrap(true);
 		
+		
+		JPanel updatePanel = new JPanel();
+		innerTabbedPane.addTab("Update", null, updatePanel, null);
+		updatePanel.setLayout(null);
+		
+		JComboBox idComboBox = new JComboBox();
+		idComboBox.setBounds(157, 11, 142, 35);
+		updatePanel.add(idComboBox);
+		
+		
+		JPanel deletePanel = new JPanel();
+		innerTabbedPane.addTab("Delete", null, deletePanel, null);
+		deletePanel.setLayout(null);
+		
+		JComboBox idComboBox2 = new JComboBox();
+		idComboBox2.setBounds(158, 12, 142, 35);
+		deletePanel.add(idComboBox2);
+		
 		JButton insertButton = new JButton("Insert");
 		insertButton.addActionListener(new ActionListener() {
 			
@@ -168,16 +191,15 @@ public class ProductInternalView extends JInternalFrame {
 				descriptionTextArea.setText("");
 				priceTextField.setText("");
 				stockTextField.setText("");
+				fillComboBox(idComboBox);
+				fillComboBox(idComboBox2);
+				fillTable(productTable);
 			}
 		});
 		insertButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		insertButton.setBounds(612, 240, 102, 30);
 		insertPanel.add(insertButton);
 		
-
-		JPanel updatePanel = new JPanel();
-		innerTabbedPane.addTab("Update", null, updatePanel, null);
-		updatePanel.setLayout(null);
 		
 		JLabel nameLabel = new JLabel("Product Name: ");
 		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -199,9 +221,6 @@ public class ProductInternalView extends JInternalFrame {
 		idLabel.setBounds(10, 11, 106, 32);
 		updatePanel.add(idLabel);
 		
-		JComboBox idComboBox = new JComboBox();
-		idComboBox.setBounds(157, 11, 142, 35);
-		updatePanel.add(idComboBox);
 		
 		JLabel priceLabel2 = new JLabel("Product Price: ");
 		priceLabel2.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -233,6 +252,7 @@ public class ProductInternalView extends JInternalFrame {
 		scrollPane_1.setViewportView(descriptionTextArea2);
 		descriptionTextArea2.setFont(new Font("Monospaced", Font.PLAIN, 14));
 		
+		
 		JButton updateButton = new JButton("Update");
 		updateButton.addActionListener(new ActionListener() {
 			
@@ -240,7 +260,7 @@ public class ProductInternalView extends JInternalFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				ProductHandler handler = ProductHandler.getInstance();
-				int productID = (Integer) idComboBox.getSelectedItem();
+				int productID = Integer.parseInt(idComboBox.getSelectedItem().toString());
 				String name = nameTextField2.getText();
 				String description = descriptionTextArea2.getText();
 				int price = Integer.parseInt(priceTextField2.getText());
@@ -259,24 +279,20 @@ public class ProductInternalView extends JInternalFrame {
 					descriptionTextArea2.setText("");
 					priceTextField2.setText("");
 					stockTextField2.setText("");
+					fillComboBox(idComboBox);
+					fillComboBox(idComboBox2);
+					fillTable(productTable);
 				}
 			}
 		});
 		updateButton.setBounds(615, 239, 99, 31);
 		updatePanel.add(updateButton);
 		
-		JPanel deletePanel = new JPanel();
-		innerTabbedPane.addTab("Delete", null, deletePanel, null);
-		deletePanel.setLayout(null);
-		
 		JLabel idLabel2 = new JLabel("Employee ID: ");
 		idLabel2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		idLabel2.setBounds(10, 11, 106, 32);
 		deletePanel.add(idLabel2);
 		
-		JComboBox idComboBox2 = new JComboBox();
-		idComboBox2.setBounds(158, 12, 142, 35);
-		deletePanel.add(idComboBox2);
 		
 		nameTextField3 = new JTextField();
 		nameTextField3.setEditable(false);
@@ -331,7 +347,7 @@ public class ProductInternalView extends JInternalFrame {
 				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure, you want to delete?", "Confirm", JOptionPane.YES_NO_OPTION);
 				if(confirm == 1)
 					return;
-				Integer productID = (Integer)idComboBox2.getSelectedItem();
+				int productID = Integer.parseInt(idComboBox2.getSelectedItem().toString());
 				ProductHandler handler = ProductHandler.getInstance();
 				Product p = handler.deleteProduct(productID);
 				if(p==null)
@@ -345,6 +361,9 @@ public class ProductInternalView extends JInternalFrame {
 				descriptionTextArea3.setText("");
 				priceTextField3.setText("");
 				stockTextField3.setText("");
+				fillComboBox(idComboBox);
+				fillComboBox(idComboBox2);
+				fillTable(productTable);
 			}
 		});
 		deleteButton.setBounds(615, 239, 99, 31);
@@ -440,8 +459,27 @@ public class ProductInternalView extends JInternalFrame {
 		panel_2.add(textField_2);
 		textField_2.setColumns(10);
 		
+		
+		idComboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				
+				int id = Integer.parseInt(idComboBox.getSelectedItem().toString());
+				fillTextFields(id, nameTextField2, descriptionTextArea2, priceTextField2, stockTextField2);
+			}
+		});
+		
+		
+		
+		idComboBox2.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				
+				int id = Integer.parseInt(idComboBox.getSelectedItem().toString());
+				fillTextFields(id, nameTextField3, descriptionTextArea3, priceTextField3, stockTextField3);
+			}
+		});
 		fillComboBox(idComboBox);
 		fillComboBox(idComboBox2);
+		fillTable(productTable);
 
 	}
 	
@@ -453,5 +491,53 @@ public class ProductInternalView extends JInternalFrame {
 		for(Product p: items)
 			model.addElement(Integer.toString(p.getProductID()));
 		cb.setModel(model);
+	}
+	
+	public void fillTable(JTable table)
+	{
+		ProductHandler handler = ProductHandler.getInstance();
+		List<Product> productItems = handler.getAllProducts();
+		
+		Vector<String> headings = new Vector<>();
+		headings.add("ID");
+		headings.add("Name");
+		headings.add("Description");
+		headings.add("Price");
+		headings.add("Stock");
+		
+		System.out.println("Size: " + headings.size());
+		
+		DefaultTableModel model = new DefaultTableModel(headings, 0)
+				{
+					public boolean isCellEditable(int row, int column)
+					{
+						return false;
+					}
+				};
+				
+				
+		for(Product p: productItems)
+		{
+			Vector<Object> v = new Vector<>();
+			v.add(p.getProductID());
+			v.add(p.getName());
+			v.add(p.getDescription());
+			v.add(p.getPrice());
+			v.add(p.getStock());
+			model.addRow(v);
+		}
+		
+		table.setModel(model);
+	}
+	
+	public void fillTextFields(int productID, JTextField nameTextField, JTextArea textArea, JTextField priceTextField, JTextField stockTextField)
+	{
+		Product p = new Product();
+		Product p2 = p.getProduct(productID);
+		nameTextField.setText(p2.getName());
+		textArea.setText(p2.getDescription());
+		priceTextField.setText(p2.getPrice() + "");
+		stockTextField.setText(p2.getStock() + "");
+		
 	}
 }

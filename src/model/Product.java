@@ -63,13 +63,13 @@ public class Product
 	public Product insertNewProdut()
 	{
 		Connect connect = Connect.getConnection();
-		PreparedStatement preparedStatement = connect.getPrepareStatement("INSERT INTO PRODUCT(PROD_NAME, PROD_DESC, PROD_PRICE, PROD_STOCK) VALUES(?,?, ?, ?)");
+		PreparedStatement preparedStatement = connect.getPrepareStatement("INSERT INTO PRODUCT(PROD_NAME, PROD_DESC, PROD_PRICE, PROD_STOCK) VALUES(?, ?, ?, ?)");
 		try {
 			preparedStatement.setString(1, this.getName());
 			preparedStatement.setString(2,  this.getDescription());
 			preparedStatement.setInt(3, this.getPrice());
 			preparedStatement.setInt(4, this.getStock());
-			preparedStatement.executeQuery();
+			preparedStatement.execute();
 			return this;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -115,14 +115,13 @@ public class Product
 	public Product updateProduct() 
 	{
 		Connect connect = Connect.getConnection();
-		PreparedStatement preparedStatement = connect.getPrepareStatement("UPDATE PROD SET PRD_NAME=?, PROD_DESC=?, PROD_PRICE=? PROD_STOCK=? ");
+		PreparedStatement preparedStatement = connect.getPrepareStatement("UPDATE PRODUCT SET PROD_NAME =?, PROD_DESC=?, PROD_PRICE=?, PROD_STOCK=? WHERE PROD_ID=" + getProductID() +";");
 		try {
 			preparedStatement.setString(1, getName());
 			preparedStatement.setString(2, getDescription());
 			preparedStatement.setInt(3,  getPrice());
 			preparedStatement.setInt(4,  getStock());
-			preparedStatement.setInt(5,  getProductID());
-			preparedStatement.execute();
+			preparedStatement.executeUpdate();
 			return this;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -134,10 +133,9 @@ public class Product
 	public boolean deleteProduct() 
 	{
 		Connect connect = Connect.getConnection();
-		PreparedStatement preparedStatement = connect.getPrepareStatement("DELETE FROM PROD WHERE PROD_ID=?");
+		PreparedStatement preparedStatement = connect.getPrepareStatement("DELETE FROM PRODUCT WHERE PROD_ID=" + getProductID() + ";");
 		try {
-			preparedStatement.setInt(1, getProductID());
-			return preparedStatement.execute();
+			return !preparedStatement.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

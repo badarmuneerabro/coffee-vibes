@@ -57,7 +57,7 @@ public class ProductHandler
 	{
 		List<Product> allProducts = new ArrayList<>();
 		Connect connect = Connect.getConnection();
-		ResultSet rs = connect.executeQuery("PROD");
+		ResultSet rs = connect.executeQuery("PRODUCT");
 		
 		try {
 			while(rs.next())
