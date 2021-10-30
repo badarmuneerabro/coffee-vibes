@@ -40,6 +40,7 @@ public class ProductInternalView extends JInternalFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					System.out.println("Hello, World!");
 					ProductInternalView frame = new ProductInternalView();
 					frame.setVisible(true);
 				} catch (Exception e) {
