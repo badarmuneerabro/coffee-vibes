@@ -12,6 +12,8 @@ import javax.swing.JSeparator;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MainView {
 	private static MainView mainView;
@@ -72,6 +74,30 @@ public class MainView {
 		acountItem.add(msgMenuItem);
 		
 		JMenuItem logOutMenuItem = new JMenuItem("Log Out");
+		logOutMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				//
+				//
+				
+				//
+				
+				//
+				
+				//
+				
+				//
+				
+				//
+				
+				
+				
+				
+				
+				
+			}
+		});
 		acountItem.add(logOutMenuItem);
 		productFrame = new ProductInternalView();
 		productFrame.setLocation(10, 47);
@@ -87,6 +113,8 @@ public class MainView {
 	public void restore()
 	{
 		loginFrame = new LoginInternalFrame();
+		productFrame = new ProductInternalView();
+		managerFrame = new ManagerInternalView();
 	}
 	public void addFrames()
 	{
