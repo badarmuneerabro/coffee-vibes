@@ -276,12 +276,6 @@ public class ProductInternalView extends JInternalFrame {
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure, you want to delete?", "Confirm", JOptionPane.YES_NO_OPTION);
-				if(confirm == 1)
-					return;
-				int productID = 
-				Product p = new Product();
-				p.setProductID();
 			}
 		});
 		deleteButton.setBounds(615, 239, 99, 31);
