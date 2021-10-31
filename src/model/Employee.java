@@ -1,5 +1,9 @@
 package model;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 public class Employee 
 {
@@ -77,25 +81,103 @@ public class Employee
 	
 	public Employee insertEmployee()
 	{
+		Connect connect = Connect.getConnection();
+		PreparedStatement statement = connect.getPrepareStatement("INSERT INTO EMP(EMP_NAME, EMP_STATUS, EMP_SAL, EMP_USERNAME, EMP_PASSWORD, EMP_POS_ID) VALUES(?, ?, ?, ?, ?, ?);");
+		try 
+		{
+			statement.setString(1, getName());
+			statement.setString(2,  getStatus());
+			statement.setInt(3, getSalary());
+			statement.setString(4, getUserName());
+			statement.setString(5, getPassword());
+			statement.setInt(6, getPositionID());
+			statement.execute();
+			return this;
+		} catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
+		
 	}
 	
 	public List<Employee> getAllEmployees()
 	{
-		return null;
+		Connect connect = Connect.getConnection();
+		ResultSet rs = connect.executeQuery("EMP");
+		List<Employee> allEmployees = new ArrayList<>();
+		try {
+			while(rs.next())
+			{
+				Employee e = new Employee();
+				e.setName(rs.getString("EMP_NAME"));
+				e.setStatus(rs.getString("EMP_STATUS"));
+				e.setSalary(rs.getInt("EMP_SAL"));
+				e.setUserName(rs.getString("EMP_USERNAME"));
+				e.setPassword(rs.getString("EMP_PASSWORD"));
+				e.setPositionID(rs.getInt("EMP_POS_ID"));
+				allEmployees.add(e);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		return allEmployees;
 	}
 	
 	public Employee getEmployee(String userName)
 	{
-		return null;
+		Connect connect = Connect.getConnection();
+		PreparedStatement statement = connect.getPrepareStatement("SELECT * FROM EMP WHERE EMP_USERNAME=" + getUserName());
+		try {
+			ResultSet rs = statement.executeQuery();
+			Employee e= new Employee();
+			e.setEmployeeID(rs.getInt("EMP_ID"));
+			e.setName(rs.getString("EMP_NAME"));
+			e.setStatus(rs.getString("EMP_STATUS"));
+			e.setSalary(rs.getInt("EMP_SALY"));
+			e.setUserName(rs.getString("EMP_USERNAME"));
+			e.setPassword(rs.getString("EMP_PASSWORD"));
+			e.setPositionID(rs.getInt("EMP_POS_ID"));
+			return e;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public Employee updateEmployee()
 	{
+		Connect connect = Connect.getConnection();
+		PreparedStatement statement = connect.getPrepareStatement("UPDATE EMP SET EMP_NAME=?, EMP_STATUS=?, EMP_SAL=?, EMP_USERNAME=?, EMP_PASSWORD=? WHERE EMP_ID=" + getEmployeeID());
+		try {
+			statement.setString(1, getName());
+			statement.setString(2, getStatus());
+			statement.setInt(3, getSalary());
+			statement.setString(4, getUserName());
+			statement.setString(5, getPassword());
+			statement.executeUpdate();
+			return this;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
-	public boolean fireEmployee(int ID)
+	public boolean fireEmployee()
 	{
+		Connect connect = Connect.getConnection();
+		PreparedStatement statement = connect.getPrepareStatement("DELETE FROM EMP WHERE EMP_ID=" + getEmployeeID());
+		try {
+			return !statement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 	}
 }

@@ -3,6 +3,7 @@ package model;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -82,7 +83,25 @@ public class Product
 	
 	public List<Product> getAllProducts()
 	{
-		return null;
+		List<Product> allProducts = new ArrayList<>();
+		ResultSet rs = Connect.getConnection().executeQuery("PRODUCT");
+		
+		try {
+			while(rs.next())
+			{
+				Product p = new Product();
+				p.setProductID(rs.getInt("PROD_ID"));
+				p.setName(rs.getString("PROD_NAME"));
+				p.setDescription(rs.getString("PROD_DESC"));
+				p.setPrice(rs.getInt("PROD_PRICE"));
+				p.setStock(rs.getInt("PROD_STOCK"));
+				allProducts.add(p);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return allProducts;
 	}
 	
 	public Product getProduct(int productID)

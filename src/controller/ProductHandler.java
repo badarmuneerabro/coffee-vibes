@@ -55,28 +55,8 @@ public class ProductHandler
 	
 	public List<Product> getAllProducts()
 	{
-		List<Product> allProducts = new ArrayList<>();
-		Connect connect = Connect.getConnection();
-		ResultSet rs = connect.executeQuery("PRODUCT");
-		
-		try {
-			while(rs.next())
-			{
-				Product p = new Product();
-				p.setProductID(rs.getInt("PROD_ID"));
-				p.setName(rs.getString("PROD_NAME"));
-				p.setDescription(rs.getString("PROD_DESC"));
-				p.setPrice(rs.getInt("PROD_PRICE"));
-				p.setStock(rs.getInt("PROD_STOCK"));
-				allProducts.add(p);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-		
-
+		Product p = new Product();
+		List<Product> allProducts = p.getAllProducts();
 		return allProducts;
 	}
 	
