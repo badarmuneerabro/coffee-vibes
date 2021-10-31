@@ -71,50 +71,46 @@ public class MainView {
 		menuBar.add(acountItem);
 		
 		msgMenuItem = new JMenuItem("No Log In");
+		msgMenuItem.setEnabled(false);
 		acountItem.add(msgMenuItem);
 		
 		JMenuItem logOutMenuItem = new JMenuItem("Log Out");
 		logOutMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
-				//
-				//
-				
-				//
-				
-				//
-				
-				//
-				
-				//
-				
-				//
-				
-				
-				
-				
-				
-				
+				restore();
+				openLoginFrame();
 			}
 		});
 		acountItem.add(logOutMenuItem);
 		productFrame = new ProductInternalView();
-		productFrame.setLocation(10, 47);
+		//productFrame.setLocation(10, 47);
 		loginFrame = new LoginInternalFrame();
 		loginFrame.setBounds(238, 168, 448, 299);
 		managerFrame = new ManagerInternalView();
 		managerFrame.setSize(746, 589);
-		managerFrame.setLocation(23, 58);
+		//managerFrame.setLocation(23, 58);
 		addFrames();
 		openLoginFrame();
 	}
 	
 	public void restore()
 	{
+		loginFrame.setVisible(false);
+		productFrame.setVisible(false);
+		managerFrame.setVisible(false);
+		
+		
+		frmCoffeeVibes.remove(loginFrame);
+		frmCoffeeVibes.remove(productFrame);
+		frmCoffeeVibes.remove(managerFrame);
+		
+		
 		loginFrame = new LoginInternalFrame();
 		productFrame = new ProductInternalView();
 		managerFrame = new ManagerInternalView();
+		
+		addFrames();
 	}
 	public void addFrames()
 	{
@@ -132,6 +128,7 @@ public class MainView {
 		Dimension jInternalFrameSize = frame.getSize();
 		int width = (900 - jInternalFrameSize.width) / 2;
 		int height = (785 - jInternalFrameSize.height) / 2;
+		frame.setLocation(width, height);
 		frame.setVisible(true);
 	}
 	public void openLoginFrame()

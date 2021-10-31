@@ -8,6 +8,16 @@ import model.Employee;
 
 public class EmployeeHandler 
 {
+	private static EmployeeHandler employeeHandler;
+	private EmployeeHandler()
+	{
+		
+	}
+	
+	public static EmployeeHandler getInstance()
+	{
+		return (employeeHandler == null) ? employeeHandler = new EmployeeHandler() : employeeHandler;
+	}
 
 	public Employee insertEmployee(String name, String position, int salary, String userName, String password)
 	{
