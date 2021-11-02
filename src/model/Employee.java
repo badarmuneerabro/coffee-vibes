@@ -111,6 +111,7 @@ public class Employee
 			while(rs.next())
 			{
 				Employee e = new Employee();
+				e.setEmployeeID(rs.getInt("EMP_ID"));
 				e.setName(rs.getString("EMP_NAME"));
 				e.setStatus(rs.getString("EMP_STATUS"));
 				e.setSalary(rs.getInt("EMP_SAL"));
@@ -127,17 +128,18 @@ public class Employee
 		return allEmployees;
 	}
 	
-	public Employee getEmployee(String userName)
+	public Employee getEmployee()
 	{
 		Connect connect = Connect.getConnection();
-		PreparedStatement statement = connect.getPrepareStatement("SELECT * FROM EMP WHERE EMP_USERNAME=" + getUserName());
+		PreparedStatement statement = connect.getPrepareStatement("SELECT * FROM EMP WHERE EMP_ID=" + getEmployeeID());
 		try {
 			ResultSet rs = statement.executeQuery();
+			rs.next();
 			Employee e= new Employee();
 			e.setEmployeeID(rs.getInt("EMP_ID"));
 			e.setName(rs.getString("EMP_NAME"));
 			e.setStatus(rs.getString("EMP_STATUS"));
-			e.setSalary(rs.getInt("EMP_SALY"));
+			e.setSalary(rs.getInt("EMP_SAL"));
 			e.setUserName(rs.getString("EMP_USERNAME"));
 			e.setPassword(rs.getString("EMP_PASSWORD"));
 			e.setPositionID(rs.getInt("EMP_POS_ID"));
@@ -152,10 +154,10 @@ public class Employee
 	public Employee updateEmployee()
 	{
 		Connect connect = Connect.getConnection();
-		PreparedStatement statement = connect.getPrepareStatement("UPDATE EMP SET EMP_NAME=?, EMP_STATUS=?, EMP_SAL=?, EMP_USERNAME=?, EMP_PASSWORD=? WHERE EMP_ID=" + getEmployeeID());
+		PreparedStatement statement = connect.getPrepareStatement("UPDATE EMP SET EMP_NAME=?, EMP_POS_ID=?, EMP_SAL=?, EMP_USERNAME=?, EMP_PASSWORD=? WHERE EMP_ID=" + getEmployeeID());
 		try {
 			statement.setString(1, getName());
-			statement.setString(2, getStatus());
+			statement.setInt(2, getPositionID());
 			statement.setInt(3, getSalary());
 			statement.setString(4, getUserName());
 			statement.setString(5, getPassword());
@@ -171,7 +173,7 @@ public class Employee
 	public boolean fireEmployee()
 	{
 		Connect connect = Connect.getConnection();
-		PreparedStatement statement = connect.getPrepareStatement("DELETE FROM EMP WHERE EMP_ID=" + getEmployeeID());
+		PreparedStatement statement = connect.getPrepareStatement("UPDATE EMP SET EMP_STATUS='" + "fired'" + "WHERE EMP_ID=" + getEmployeeID());
 		try {
 			return !statement.execute();
 		} catch (SQLException e) {
@@ -179,5 +181,20 @@ public class Employee
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public String getPosition()
+	{
+		Connect connect = Connect.getConnection();
+		PreparedStatement statement = connect.getPrepareStatement("SELECT POSITION_NAME FROM POSITION WHERE POSITION_ID=" + getPositionID());
+		try {
+			ResultSet rs = statement.executeQuery();
+			rs.next();
+			return rs.getString("POSITION_NAME");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

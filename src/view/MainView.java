@@ -22,6 +22,7 @@ public class MainView {
 	private LoginInternalFrame loginFrame;
 	private ProductInternalView productFrame;
 	private ManagerInternalView managerFrame;
+	private EmployeeView empFrame;
 	private JMenuItem msgMenuItem;
 
 	/**
@@ -89,6 +90,7 @@ public class MainView {
 		loginFrame.setBounds(238, 168, 448, 299);
 		managerFrame = new ManagerInternalView();
 		managerFrame.setSize(746, 589);
+		empFrame = new EmployeeView();
 		//managerFrame.setLocation(23, 58);
 		addFrames();
 		openLoginFrame();
@@ -99,17 +101,18 @@ public class MainView {
 		loginFrame.setVisible(false);
 		productFrame.setVisible(false);
 		managerFrame.setVisible(false);
+		empFrame.setVisible(false);
 		
 		
 		frmCoffeeVibes.remove(loginFrame);
 		frmCoffeeVibes.remove(productFrame);
 		frmCoffeeVibes.remove(managerFrame);
-		
+		frmCoffeeVibes.remove(empFrame);
 		
 		loginFrame = new LoginInternalFrame();
 		productFrame = new ProductInternalView();
 		managerFrame = new ManagerInternalView();
-		
+		empFrame = new EmployeeView();
 		addFrames();
 	}
 	public void addFrames()
@@ -117,6 +120,7 @@ public class MainView {
 		this.frmCoffeeVibes.getContentPane().add(productFrame);
 		this.frmCoffeeVibes.getContentPane().add(loginFrame);
 		this.frmCoffeeVibes.getContentPane().add(managerFrame);
+		this.frmCoffeeVibes.getContentPane().add(empFrame);
 	}
 	public static MainView getInstance()
 	{
@@ -147,6 +151,10 @@ public class MainView {
 	public void openProductInternalVeiw()
 	{
 		openInternalFrame(productFrame);
+	}
+	public void openEmployeeInternalView()
+	{
+		openInternalFrame(empFrame);
 	}
 	public void setVisible()
 	{

@@ -122,7 +122,12 @@ public class Product
 				p.setStock(rs.getInt("PROD_STOCK"));
 				return p;
 			}
-			JOptionPane.showMessageDialog(null, "No Product found", "WARNING", JOptionPane.WARNING_MESSAGE);
+			
+			
+			
+			
+			
+			//JOptionPane.showMessageDialog(null, "No Product found", "WARNING", JOptionPane.WARNING_MESSAGE);
 			return null;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

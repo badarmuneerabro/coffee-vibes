@@ -137,6 +137,8 @@ public class LoginInternalFrame extends JInternalFrame {
 			MainView.getInstance().setText("Manager");
 			break;
 		case 4:
+			MainView.getInstance().openEmployeeInternalView();
+			MainView.getInstance().setText("Human Resource Manager");
 			break;
 		}
 	}

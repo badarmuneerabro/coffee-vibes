@@ -236,7 +236,7 @@ public class ProductInternalView extends JInternalFrame {
 		descriptionLabel2.setBounds(10, 98, 137, 25);
 		updatePanel.add(descriptionLabel2);
 		
-		JLabel idLabel = new JLabel("Employee ID: ");
+		JLabel idLabel = new JLabel("Product ID:");
 		idLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		idLabel.setBounds(10, 11, 106, 32);
 		updatePanel.add(idLabel);

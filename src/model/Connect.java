@@ -31,7 +31,7 @@ public class Connect
 		}
 		catch(SQLException e)
 		{
-			JOptionPane.showMessageDialog(null, "Failed to connect to database", "ERROR", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Failed to connect to database:" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 			System.exit(1);
 		}
@@ -50,7 +50,7 @@ public class Connect
 			resultSet = statement.executeQuery("SELECT * FROM " + table);
 		}catch(SQLException e)
 		{
-			JOptionPane.showMessageDialog(null, "Failed to execute SELECT query", "Query failed", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Failed to execute SELECT query on " + table, "Query failed", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 			return null;
 		}

@@ -93,7 +93,8 @@ public class ProductHandler
 	
 	public Product getProduct(int productID)
 	{
-		return null;
+		Product p = new Product();
+		return p.getProduct(productID);
 	}
 	
 	public Product deleteProduct(int productID)
