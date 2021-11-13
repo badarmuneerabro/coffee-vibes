@@ -12,9 +12,9 @@ import java.sql.PreparedStatement;
 
 public class Connect 
 {
-	private final String USERNAME = "root";
-	private final String PASSWORD = "";
-	private final String URL = "jdbc:mysql://localhost:3308/coffeevibes";
+	private final String USERNAME = "root"; //enter your user name of phpmyadmin default is root.
+	private final String PASSWORD = ""; //here place your password default is "".
+	private final String URL = "jdbc:mysql://localhost:3308/coffeevibes"; //change the port default 3306.
 	
 	
 	private Connection connection;
@@ -31,7 +31,7 @@ public class Connect
 		}
 		catch(SQLException e)
 		{
-			JOptionPane.showMessageDialog(null, "Failed to connect to database", "ERROR", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Failed to connect to database:" + e, "ERROR", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 			System.exit(1);
 		}
@@ -50,7 +50,7 @@ public class Connect
 			resultSet = statement.executeQuery("SELECT * FROM " + table);
 		}catch(SQLException e)
 		{
-			JOptionPane.showMessageDialog(null, "Failed to execute SELECT query", "Query failed", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Failed to execute SELECT query on " + table, "Query failed", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 			return null;
 		}

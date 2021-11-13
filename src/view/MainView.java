@@ -12,6 +12,8 @@ import javax.swing.JSeparator;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MainView {
 	private static MainView mainView;
@@ -20,6 +22,8 @@ public class MainView {
 	private LoginInternalFrame loginFrame;
 	private ProductInternalView productFrame;
 	private ManagerInternalView managerFrame;
+	private BaristaInternalView baristaFrame;
+	private EmployeeView empFrame;
 	private JMenuItem msgMenuItem;
 
 	/**
@@ -69,27 +73,62 @@ public class MainView {
 		menuBar.add(acountItem);
 		
 		msgMenuItem = new JMenuItem("No Log In");
+		msgMenuItem.setEnabled(false);
 		acountItem.add(msgMenuItem);
+		
+		JMenuItem logOutMenuItem = new JMenuItem("Log Out");
+		logOutMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				restore();
+				openLoginFrame();
+			}
+		});
+		acountItem.add(logOutMenuItem);
 		productFrame = new ProductInternalView();
-		productFrame.setLocation(10, 47);
+		//productFrame.setLocation(10, 47);
 		loginFrame = new LoginInternalFrame();
 		loginFrame.setBounds(238, 168, 448, 299);
 		managerFrame = new ManagerInternalView();
 		managerFrame.setSize(746, 589);
-		managerFrame.setLocation(23, 58);
+		empFrame = new EmployeeView();
+		baristaFrame = new BaristaInternalView();
+		baristaFrame.setLocation(10, 33);
 		addFrames();
 		openLoginFrame();
 	}
 	
 	public void restore()
 	{
+		loginFrame.setVisible(false);
+		productFrame.setVisible(false);
+		managerFrame.setVisible(false);
+		empFrame.setVisible(false);
+		baristaFrame.setVisible(false);
+		
+		
+		frmCoffeeVibes.remove(loginFrame);
+		frmCoffeeVibes.remove(productFrame);
+		frmCoffeeVibes.remove(managerFrame);
+		frmCoffeeVibes.remove(empFrame);
+		frmCoffeeVibes.remove(baristaFrame);
+		
+		
 		loginFrame = new LoginInternalFrame();
+		productFrame = new ProductInternalView();
+		managerFrame = new ManagerInternalView();
+		empFrame = new EmployeeView();
+		baristaFrame = new BaristaInternalView();
+		
+		addFrames();
 	}
 	public void addFrames()
 	{
 		this.frmCoffeeVibes.getContentPane().add(productFrame);
 		this.frmCoffeeVibes.getContentPane().add(loginFrame);
 		this.frmCoffeeVibes.getContentPane().add(managerFrame);
+		this.frmCoffeeVibes.getContentPane().add(empFrame);
+		this.frmCoffeeVibes.getContentPane().add(baristaFrame);
 	}
 	public static MainView getInstance()
 	{
@@ -97,10 +136,18 @@ public class MainView {
 	}
 	public void openInternalFrame(JInternalFrame frame)
 	{
-		System.out.println("Hello, this is openInternalFrame().");
+		System.out.println("Step 3");
 		Dimension jInternalFrameSize = frame.getSize();
 		int width = (900 - jInternalFrameSize.width) / 2;
 		int height = (785 - jInternalFrameSize.height) / 2;
+		if(frame == baristaFrame)
+		{
+			frame.setLocation(10, 33);
+			frame.setVisible(true);
+			return;
+		}
+		
+		frame.setLocation(width, height);
 		frame.setVisible(true);
 	}
 	public void openLoginFrame()
@@ -120,8 +167,17 @@ public class MainView {
 	{
 		openInternalFrame(productFrame);
 	}
+	public void openEmployeeInternalView()
+	{
+		openInternalFrame(empFrame);
+	}
 	public void setVisible()
 	{
 		frmCoffeeVibes.setVisible(true);
+	}
+	public void openBaristaInternalView()
+	{
+		System.out.println("Step 2");
+		openInternalFrame(baristaFrame);
 	}
 }
