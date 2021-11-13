@@ -22,6 +22,7 @@ public class MainView {
 	private LoginInternalFrame loginFrame;
 	private ProductInternalView productFrame;
 	private ManagerInternalView managerFrame;
+	private BaristaInternalView baristaFrame;
 	private EmployeeView empFrame;
 	private JMenuItem msgMenuItem;
 
@@ -91,7 +92,8 @@ public class MainView {
 		managerFrame = new ManagerInternalView();
 		managerFrame.setSize(746, 589);
 		empFrame = new EmployeeView();
-		//managerFrame.setLocation(23, 58);
+		baristaFrame = new BaristaInternalView();
+		baristaFrame.setLocation(10, 33);
 		addFrames();
 		openLoginFrame();
 	}
@@ -102,17 +104,22 @@ public class MainView {
 		productFrame.setVisible(false);
 		managerFrame.setVisible(false);
 		empFrame.setVisible(false);
+		baristaFrame.setVisible(false);
 		
 		
 		frmCoffeeVibes.remove(loginFrame);
 		frmCoffeeVibes.remove(productFrame);
 		frmCoffeeVibes.remove(managerFrame);
 		frmCoffeeVibes.remove(empFrame);
+		frmCoffeeVibes.remove(baristaFrame);
+		
 		
 		loginFrame = new LoginInternalFrame();
 		productFrame = new ProductInternalView();
 		managerFrame = new ManagerInternalView();
 		empFrame = new EmployeeView();
+		baristaFrame = new BaristaInternalView();
+		
 		addFrames();
 	}
 	public void addFrames()
@@ -121,6 +128,7 @@ public class MainView {
 		this.frmCoffeeVibes.getContentPane().add(loginFrame);
 		this.frmCoffeeVibes.getContentPane().add(managerFrame);
 		this.frmCoffeeVibes.getContentPane().add(empFrame);
+		this.frmCoffeeVibes.getContentPane().add(baristaFrame);
 	}
 	public static MainView getInstance()
 	{
@@ -128,10 +136,17 @@ public class MainView {
 	}
 	public void openInternalFrame(JInternalFrame frame)
 	{
-		System.out.println("Hello, this is openInternalFrame().");
+		System.out.println("Step 3");
 		Dimension jInternalFrameSize = frame.getSize();
 		int width = (900 - jInternalFrameSize.width) / 2;
 		int height = (785 - jInternalFrameSize.height) / 2;
+		if(frame == baristaFrame)
+		{
+			frame.setLocation(10, 33);
+			frame.setVisible(true);
+			return;
+		}
+		
 		frame.setLocation(width, height);
 		frame.setVisible(true);
 	}
@@ -159,5 +174,10 @@ public class MainView {
 	public void setVisible()
 	{
 		frmCoffeeVibes.setVisible(true);
+	}
+	public void openBaristaInternalView()
+	{
+		System.out.println("Step 2");
+		openInternalFrame(baristaFrame);
 	}
 }

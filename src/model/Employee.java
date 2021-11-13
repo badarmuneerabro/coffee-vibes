@@ -173,7 +173,7 @@ public class Employee
 	public boolean fireEmployee()
 	{
 		Connect connect = Connect.getConnection();
-		PreparedStatement statement = connect.getPrepareStatement("UPDATE EMP SET EMP_STATUS='" + "fired'" + "WHERE EMP_ID=" + getEmployeeID());
+		PreparedStatement statement = connect.getPrepareStatement("UPDATE EMP SET EMP_STATUS='" + "FIRED'" + "WHERE EMP_ID=" + getEmployeeID());
 		try {
 			return !statement.execute();
 		} catch (SQLException e) {
@@ -183,6 +183,19 @@ public class Employee
 		return false;
 	}
 	
+	
+	public boolean deleteEmployee()
+	{
+		Connect connect = Connect.getConnection();
+		PreparedStatement statement = connect.getPrepareStatement("DELETE FROM EMP WHERE EMP_ID=" + getEmployeeID());
+		try {
+			return !statement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
 	public String getPosition()
 	{
 		Connect connect = Connect.getConnection();

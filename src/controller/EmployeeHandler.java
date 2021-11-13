@@ -144,4 +144,12 @@ public class EmployeeHandler
 		e.setPositionID(positionID);
 		return e.updateEmployee();
 	}
+	
+	
+	public boolean deleteEmployee(int ID)
+	{
+		Employee e = new Employee();
+		e.setEmployeeID(ID);
+		return e.deleteEmployee();
+	}
 }

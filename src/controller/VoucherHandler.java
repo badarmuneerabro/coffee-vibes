@@ -35,16 +35,26 @@ public class VoucherHandler
 		}
 		Voucher v = new Voucher();
 		v.setDiscount(discount);
-		
 		return v.insertVoucher();
 		
 	}
 	
 	public boolean deleteVoucher(int voucherID)
 	{
+		Voucher v = getVoucher(voucherID);
+		if(v.getStatus().equalsIgnoreCase("used"))
+		{
+			JOptionPane.showMessageDialog(null, "Voucher has been used, can not be deleted.");
+			return false;
+		}
+		return v.deleteVoucher();
+	}
+	
+	public boolean updateVoucher(int voucherID)
+	{
 		Voucher v = new Voucher();
 		v.setVoucherID(voucherID);
-		return v.deleteVoucher();
+		return v.updateVoucher();
 	}
 	public Voucher getVoucher(int voucherID)
 	{

@@ -11,6 +11,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import model.Connect;
+import model.Employee;
 
 import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
@@ -22,6 +23,9 @@ public class LoginInternalFrame extends JInternalFrame {
 	
 	private JTextField userNameTextField;
 	private JPasswordField passwordTextField;
+	private static String userName1;
+	private static String password1;
+	private static Employee loggedIn;
 	/**
 	 * Launch the application.
 	 */
@@ -73,6 +77,8 @@ public class LoginInternalFrame extends JInternalFrame {
 				String userName =userNameTextField.getText();
 				String password = new String(passwordTextField.getPassword());
 				
+				userName1 = userName;
+				password1 = password;
 				if(userName.trim().isEmpty() || password.trim().isEmpty())
 				{
 					JOptionPane.showMessageDialog(null, "Username or password can not be empty", "Login Failed", JOptionPane.ERROR_MESSAGE);
@@ -123,10 +129,11 @@ public class LoginInternalFrame extends JInternalFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("Position: " + position);
 		switch(position)
 		{
 		case 1:
+			MainView.getInstance().openBaristaInternalView();
+			MainView.getInstance().setText("Barista");
 			break;
 		case 2:
 			MainView.getInstance().openProductInternalVeiw();
@@ -141,6 +148,40 @@ public class LoginInternalFrame extends JInternalFrame {
 			MainView.getInstance().setText("Human Resource Manager");
 			break;
 		}
+	}
+	
+	
+	
+public static String getUserName() {
+		
+		return userName1;
+	}
+	
+	public static String getPassword() {
+		return password1;
+	}
+	
+	public static Employee getLoggedInEmployee()
+	{
+		Connect db = Connect.getConnection();
+		PreparedStatement pStatement = db.getPrepareStatement("SELECT * FROM EMP WHERE EMP_USERNAME=\'" + getUserName() + "\' AND EMP_PASSWORD=\'" + getPassword() + "\' AND EMP_STATUS=\'EMPLOYED\';");
+		
+		ResultSet rs;
+		try {
+			rs = pStatement.executeQuery();
+			rs.next();
+			loggedIn = new Employee();
+			loggedIn.setPositionID(rs.getInt("EMP_POS_ID"));
+			loggedIn.setEmployeeID(rs.getInt("EMP_ID"));
+			loggedIn.setName(rs.getString("EMP_NAME"));
+			loggedIn.setSalary(rs.getInt("EMP_SAL"));
+			loggedIn.setPassword(rs.getString("EMP_PASSWORD"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return loggedIn;
 	}
 
 }

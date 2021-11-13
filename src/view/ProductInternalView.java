@@ -49,6 +49,7 @@ public class ProductInternalView extends JInternalFrame {
 	private JTextField discTextField;
 	private JTextField voucherDiscountTextField;
 	private JTextField voucherStatusTextField;
+	private JTextField voucherCodeTextField;
 
 	/**
 	 * Launch the application.
@@ -368,7 +369,7 @@ public class ProductInternalView extends JInternalFrame {
 					return;
 					}
 				else
-					JOptionPane.showMessageDialog(null, "Employee Deleted Successfully...", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Product Deleted Successfully...", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
 				nameTextField3.setText("");
 				descriptionTextArea3.setText("");
 				priceTextField3.setText("");
@@ -432,6 +433,9 @@ public class ProductInternalView extends JInternalFrame {
 		discTextField.setBounds(145, 29, 98, 26);
 		panel_1.add(discTextField);
 		discTextField.setColumns(10);
+		
+		voucherCodeTextField = new JTextField();
+		voucherCodeTextField.setEditable(false);
 		
 		
 		JComboBox voucherIDComboBox = new JComboBox();
@@ -560,6 +564,15 @@ public class ProductInternalView extends JInternalFrame {
 		fillVoucherComboBox(voucherIDComboBox);
 		fillVoucherTable(voucherTable);
 		fillFields(voucherIDComboBox, voucherDiscountTextField, voucherStatusTextField);
+		
+		JLabel codeLabel = new JLabel("Code:");
+		codeLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		codeLabel.setBounds(10, 215, 76, 22);
+		panel_2.add(codeLabel);
+		
+		voucherCodeTextField.setBounds(114, 215, 101, 23);
+		panel_2.add(voucherCodeTextField);
+		voucherCodeTextField.setColumns(10);
 
 	}
 	
@@ -640,6 +653,7 @@ public class ProductInternalView extends JInternalFrame {
 		
 		Vector<String> headings = new Vector<>();
 		headings.add("ID");
+		headings.add("Code");
 		headings.add("Discount");
 		headings.add("Status");
 		
@@ -658,7 +672,8 @@ public class ProductInternalView extends JInternalFrame {
 		{
 			Vector<Object> v = new Vector<>();
 			v.add(voucher.getVoucherID());
-			v.add(voucher.getDiscount());
+			v.add(voucher.getCode());
+			v.add(voucher.getDiscount() + "%");
 			v.add(voucher.getStatus());
 			model.addRow(v);
 		}
@@ -671,9 +686,8 @@ public class ProductInternalView extends JInternalFrame {
 		int voucherID = Integer.parseInt(box.getSelectedItem().toString());
 		Voucher voucher = VoucherHandler.getInstance().getVoucher(voucherID);
 		
-		discTextField.setText(voucher.getDiscount() + "");
+		discTextField.setText(voucher.getDiscount() + "%");
 		statusTextField.setText(voucher.getStatus() + "");
+		voucherCodeTextField.setText(voucher.getCode());
 	}
-	
-	
 }

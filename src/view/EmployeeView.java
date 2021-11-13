@@ -50,6 +50,7 @@ public class EmployeeView extends JInternalFrame {
 	private JComboBox idComboBox;
 	private JTextField passwordTextField;
 	private JComboBox idComboBox2;
+	private JComboBox positionComboBox3;
 
 	/**
 	 * Launch the application.
@@ -96,6 +97,12 @@ public class EmployeeView extends JInternalFrame {
 		
 		idComboBox2 = new JComboBox();
 		idComboBox = new JComboBox();
+		
+		
+		positionComboBox3 = new JComboBox();
+		
+		
+		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(10, 174, 666, 370);
 		getContentPane().add(tabbedPane);
@@ -167,7 +174,7 @@ public class EmployeeView extends JInternalFrame {
 					fillComboBox(idComboBox);
 					fillComboBox(idComboBox2);
 					fillTable(empTable);
-					JOptionPane.showMessageDialog(null, "Employee Inserted Successfullyy\n" + "UserName: " + userName + "\nPassword: " + password, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Product Inserted Successfullyy\n" + "UserName: " + userName + "\nPassword: " + password, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
 				
@@ -311,11 +318,11 @@ public class EmployeeView extends JInternalFrame {
 		statusLabel2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		deleteEmployee.add(statusLabel2);
 		
-		JComboBox statusComboBox2 = new JComboBox();
-		statusComboBox2.setModel(new DefaultComboBoxModel(new String[] {"Manager"}));
-		statusComboBox2.setBounds(295, 112, 141, 25);
-		statusComboBox2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		deleteEmployee.add(statusComboBox2);
+		
+		positionComboBox3.setModel(new DefaultComboBoxModel(new String[] {"Manager"}));
+		positionComboBox3.setBounds(295, 112, 141, 25);
+		positionComboBox3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		deleteEmployee.add(positionComboBox3);
 		
 		JLabel salaryLabel2 = new JLabel("Salary");
 		salaryLabel2.setBounds(119, 155, 37, 17);
@@ -333,19 +340,19 @@ public class EmployeeView extends JInternalFrame {
 		userNameLabel2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		deleteEmployee.add(userNameLabel2);
 		
-		JButton fireButton = new JButton("Fire");
+		JButton fireButton = new JButton("Delete");
 		fireButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
 				
-				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure, you want to fire?", "Confirm", JOptionPane.YES_NO_OPTION);
+				int confirm = JOptionPane.showConfirmDialog(null, "Are you sure, you want to delete?", "Confirm", JOptionPane.YES_NO_OPTION);
 				if(confirm == 1)
 					return;
 				//event handler for firing an employee...
 				EmployeeHandler handler = EmployeeHandler.getInstance();
 				int empId = Integer.parseInt(idComboBox2.getSelectedItem().toString());
 				
-				if(handler.fireEmployee(empId))
+				if(handler.deleteEmployee(empId))
 				{
 					JOptionPane.showMessageDialog(null, "Deleted Successfully...", "Confirmation", JOptionPane.INFORMATION_MESSAGE);
 					fillComboBox(idComboBox2);
@@ -381,13 +388,12 @@ public class EmployeeView extends JInternalFrame {
 		});
 		idComboBox2.setBounds(295, 24, 114, 28);
 		deleteEmployee.add(idComboBox2);
-		
+		//filling position positionComboBox3.
+	    fillPositionComboBox(positionComboBox3);
 		//filling idComboBox2.
-		
 		fillComboBox(idComboBox2);
 		fillTextFields2(idComboBox2);
 		fillTable(empTable);
-		
 		
 
 	}
@@ -413,7 +419,6 @@ public class EmployeeView extends JInternalFrame {
 	{
 		if(cb.getSelectedItem() == null)
 		{
-			System.out.println("Excuted...");
 			fillTextFields(nameTextField2, "", userNameTextField2, "", salaryTextField2, "");
 			return;
 		}
@@ -422,7 +427,7 @@ public class EmployeeView extends JInternalFrame {
 		emp.setEmployeeID(empId);
 		Employee gotEmployee = emp.getEmployee();
 		fillTextFields(nameTextField2, gotEmployee.getName(), userNameTextField2, gotEmployee.getUserName(), salaryTextField2, gotEmployee.getSalary()+"");
-		positionComboBox2.setSelectedIndex(gotEmployee.getPositionID()-1);
+		positionComboBox3.setSelectedIndex(gotEmployee.getPositionID()-1);
 	}
 	
 	
@@ -452,7 +457,7 @@ public class EmployeeView extends JInternalFrame {
 		
 		for(Employee e: emps)
 		{
-			if(e.getStatus().equalsIgnoreCase("EMPLOYED"))
+			//if(e.getStatus().equalsIgnoreCase("EMPLOYED"))
 			model.addElement(Integer.toString(e.getEmployeeID()));
 		}
 		cb.setModel(model);

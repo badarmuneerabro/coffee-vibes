@@ -12,9 +12,9 @@ import java.sql.PreparedStatement;
 
 public class Connect 
 {
-	private final String USERNAME = "root";
-	private final String PASSWORD = "";
-	private final String URL = "jdbc:mysql://localhost:3308/coffeevibes";
+	private final String USERNAME = "root"; //enter your user name of phpmyadmin default is root.
+	private final String PASSWORD = ""; //here place your password default is "".
+	private final String URL = "jdbc:mysql://localhost:3308/coffeevibes"; //change the port default 3306.
 	
 	
 	private Connection connection;

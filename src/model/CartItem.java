@@ -30,4 +30,9 @@ public class CartItem
 	{
 		this.quantity = quantity;
 	}
+	
+	public String toString()
+	{
+		return product.getProductID()+ ": " + quantity;
+	}
 }
